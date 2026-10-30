@@ -1,0 +1,16 @@
+# 키가 들어가는 파일은 GitHub에 올리지 않습니다 (.env.example은 키가 없는 견본이라 올립니다)
+.env
+.env.local
+.env.*.local
+
+# 설치·빌드 결과
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# 운영체제·편집기 파일
+.DS_Store
+Thumbs.db
+.vscode/

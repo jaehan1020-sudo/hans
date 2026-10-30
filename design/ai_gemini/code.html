@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>동일토건 통합관제 - AI에게 묻기</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary": "#000000",
+            "surface-bright": "#f8f9ff",
+            "surface-container-lowest": "#ffffff",
+            "status-caution-border": "#FDE68A",
+            "surface-container-highest": "#d3e4fe",
+            "on-background": "#0b1c30",
+            "on-error": "#ffffff",
+            "text-primary": "#0F172A",
+            "status-caution": "#D97706",
+            "error-container": "#ffdad6",
+            "secondary-fixed-dim": "#b4c5ff",
+            "on-surface-variant": "#45464d",
+            "on-secondary": "#ffffff",
+            "text-secondary": "#475569",
+            "outline": "#76777d",
+            "primary-fixed": "#dae2fd",
+            "inverse-surface": "#213145",
+            "tertiary-container": "#111c2d",
+            "status-critical": "#E11D48",
+            "on-primary-fixed": "#131b2e",
+            "surface-bg": "#F8FAFC",
+            "primary": "#000000",
+            "surface-variant": "#d3e4fe",
+            "status-critical-bg": "#FFF1F2",
+            "background": "#f8f9ff",
+            "on-primary": "#ffffff",
+            "primary-fixed-dim": "#bec6e0",
+            "border-strong": "#CBD5E1",
+            "outline-variant": "#c6c6cd",
+            "on-tertiary-fixed-variant": "#3c475a",
+            "on-surface": "#0b1c30",
+            "tertiary-fixed": "#d8e3fb",
+            "on-primary-fixed-variant": "#3f465c",
+            "surface-dim": "#cbdbf5",
+            "primary-container": "#131b2e",
+            "on-tertiary": "#ffffff",
+            "on-secondary-fixed": "#00174b",
+            "on-tertiary-fixed": "#111c2d",
+            "surface-subtle": "#F1F5F9",
+            "on-secondary-container": "#fefcff",
+            "border-default": "#E2E8F0",
+            "on-error-container": "#93000a",
+            "status-critical-border": "#FECDD3",
+            "secondary": "#0051d5",
+            "status-caution-bg": "#FFFBEB",
+            "text-muted": "#94A3B8",
+            "surface": "#f8f9ff",
+            "on-primary-container": "#7c839b",
+            "surface-tint": "#565e74",
+            "surface-container-high": "#dce9ff",
+            "status-normal-bg": "#ECFDF5",
+            "secondary-fixed": "#dbe1ff",
+            "status-normal": "#059669",
+            "error": "#ba1a1a",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-card": "#FFFFFF",
+            "surface-container": "#e5eeff",
+            "secondary-container": "#316bf3",
+            "tertiary-fixed-dim": "#bcc7de",
+            "on-tertiary-container": "#79849a",
+            "on-secondary-fixed-variant": "#003ea8",
+            "status-normal-border": "#A7F3D0",
+            "surface-container-low": "#eff4ff",
+            "inverse-primary": "#bec6e0"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-wide": "2rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-2xl": "2rem",
+            "space-md": "0.75rem",
+            "gutter": "1rem",
+            "space-xl": "1.5rem",
+            "margin": "1.5rem",
+            "gutter-desktop": "1.25rem",
+            "space-lg": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "label-badge": ["Inter"],
+            "body-sm": ["Inter"],
+            "body-default": ["Inter"],
+            "label-caption": ["Inter"],
+            "data-tabular": ["JetBrains Mono"],
+            "display-hero": ["Inter"],
+            "headline-kpi": ["JetBrains Mono"],
+            "data-tabular-bold": ["JetBrains Mono"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-badge": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-default": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-caption": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }],
+            "data-tabular": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "display-hero": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-kpi": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "data-tabular-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["15px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-bg text-text-primary antialiased font-body-default min-h-screen flex">
+<!-- ============================================================== -->
+<!-- SHARED COMPONENT: SideNavBar (Active: 'AI에게 묻기' / tab_index 3) -->
+<!-- ============================================================== -->
+<aside class="fixed top-0 left-0 h-screen w-60 z-40 bg-primary dark:bg-tertiary-container border-r border-border-strong dark:border-outline">
+<div class="flex flex-col justify-between h-full p-4">
+<!-- Top Brand Anchor -->
+<div>
+<div class="flex items-center gap-3 px-2 py-3 mb-6">
+<div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-on-secondary shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="apartment">apartment</span>
+</div>
+<div>
+<div class="text-headline-md font-headline-md font-bold text-on-primary dark:text-inverse-on-surface">동일토건 통합관제</div>
+<div class="text-label-caption font-label-caption text-on-primary-container">본사 공정관리팀</div>
+</div>
+</div>
+<!-- Primary Navigation Tabs -->
+<nav class="space-y-1">
+<!-- Tab 1: 현황 요약 (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container dark:text-text-muted hover:text-on-primary hover:bg-primary-container dark:hover:bg-tertiary transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="text-body-default font-body-default">현황 요약</span>
+</a>
+<!-- Tab 2: 현장별 비교표 (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container dark:text-text-muted hover:text-on-primary hover:bg-primary-container dark:hover:bg-tertiary transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="table_chart">table_chart</span>
+<span class="text-body-default font-body-default">현장별 비교표</span>
+</a>
+<!-- Tab 3: 자료 가져오기 (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container dark:text-text-muted hover:text-on-primary hover:bg-primary-container dark:hover:bg-tertiary transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="cloud_upload">cloud_upload</span>
+<span class="text-body-default font-body-default">자료 가져오기</span>
+</a>
+<!-- Tab 4: AI에게 묻기 (ACTIVE MATCH) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-secondary text-on-secondary font-headline-md rounded-lg scale-[0.99] transition-transform duration-100" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>
+<span class="text-body-default font-body-default font-semibold">AI에게 묻기</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Utilities & CTA -->
+<div class="space-y-3 pt-4 border-t border-primary-container">
+<!-- CTA: 점검 리포트 출력 -->
+<button class="w-full flex items-center justify-center gap-2 py-2.5 px-3 bg-surface-card hover:bg-surface-subtle text-text-primary text-body-sm font-body-sm font-semibold rounded-lg border border-border-default transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="print">print</span>
+<span>점검 리포트 출력</span>
+</button>
+<!-- Footer Navigation -->
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-primary-container dark:text-text-muted hover:text-on-primary hover:bg-primary-container rounded-lg transition-colors duration-150 text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="settings">settings</span>
+<span>시스템 설정</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-primary-container dark:text-text-muted hover:text-on-primary hover:bg-primary-container rounded-lg transition-colors duration-150 text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="help_outline">help_outline</span>
+<span>운영 지원</span>
+</a>
+</div>
+</div>
+</div>
+</aside>
+<!-- ============================================================== -->
+<!-- MAIN WORKSPACE & TOP NAV BAR                                   -->
+<!-- ============================================================== -->
+<div class="ml-60 flex-1 flex flex-col min-h-screen">
+<!-- SHARED COMPONENT: TopNavBar -->
+<header class="sticky top-0 right-0 z-30 w-full h-14 bg-surface-card dark:bg-inverse-surface border-b border-border-default dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-6 h-full">
+<!-- Left: Product Identity & Sub-links -->
+<div class="flex items-center gap-6">
+<h1 class="text-headline-md font-headline-md font-bold text-text-primary dark:text-inverse-on-surface tracking-tight">
+            동일토건 현장별 공정·기성 통합 관리 시스템
+          </h1>
+<div class="hidden lg:flex items-center gap-4 text-body-sm font-body-sm">
+<span class="text-secondary dark:text-secondary-fixed font-headline-md border-b-2 border-secondary pb-1">
+              2026-09 기준 관제
+            </span>
+<span class="text-text-secondary dark:text-text-muted hover:text-text-primary cursor-pointer transition-colors">
+              수도권/전국 현장
+            </span>
+<span class="text-text-secondary dark:text-text-muted hover:text-text-primary cursor-pointer transition-colors">
+              실시간 본사 연계
+            </span>
+</div>
+</div>
+<!-- Right: Actions & User Info -->
+<div class="flex items-center gap-3">
+<button class="px-3 py-1.5 bg-surface-card border border-border-strong text-text-primary hover:bg-surface-subtle text-body-sm font-body-sm font-medium rounded-lg flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="refresh">refresh</span>
+<span>필터 초기화</span>
+</button>
+<button class="px-3 py-1.5 bg-text-primary hover:bg-slate-800 text-on-primary text-body-sm font-body-sm font-medium rounded-lg flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+<span>CSV 내보내기</span>
+</button>
+<div class="h-5 w-[1px] bg-border-default mx-1"></div>
+<button class="p-1.5 text-text-secondary hover:text-text-primary hover:bg-surface-subtle rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<!-- Admin User Chip -->
+<div class="flex items-center gap-2 pl-2">
+<div class="w-8 h-8 rounded-full bg-surface-subtle border border-border-strong flex items-center justify-center font-bold text-text-secondary text-body-sm">
+              본사
+            </div>
+<span class="text-body-sm font-body-sm text-text-primary hidden xl:inline">본사 공정관리팀 관리자</span>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN CHAT CANVAS -->
+<main class="flex-1 flex flex-col bg-surface-bg p-6 max-w-7xl w-full mx-auto space-y-4">
+<!-- ============================================================== -->
+<!-- 1. Top Context Guide Banner (PRD 반영)                        -->
+<!-- ============================================================== -->
+<div class="bg-surface-card border border-border-default rounded-xl p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="flex items-start md:items-center gap-3">
+<div class="p-2 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]" data-icon="analytics">analytics</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-sm font-body-sm font-bold text-text-primary">현재 분석 범위:</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-strong text-text-primary text-label-badge font-label-badge rounded">2026년 9월</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-strong text-text-primary text-label-badge font-label-badge rounded">전체 지역</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-strong text-text-primary text-label-badge font-label-badge rounded">전체 공사유형</span>
+<span class="px-2 py-0.5 bg-secondary-container/15 text-secondary border border-secondary/30 text-label-badge font-label-badge rounded font-bold">12개 현장 관제 대상</span>
+</div>
+<p class="text-label-caption font-label-caption text-text-secondary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified_user">verified_user</span>
+              계산은 시스템이 수행하며, AI는 검증된 통계 수치와 현장 기록 상황·대응 계획을 바탕으로 답변합니다.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0 self-end md:self-auto">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-status-normal-bg border border-status-normal-border text-status-normal text-label-badge font-label-badge">
+<span class="w-1.5 h-1.5 rounded-full bg-status-normal"></span>
+            Gemini 엔터프라이즈 실시간 가동 중
+          </span>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- 2. Recommended Prompt Chips (PRD 10항 3대 질문 칩)             -->
+<!-- ============================================================== -->
+<div class="space-y-2">
+<div class="flex items-center gap-1.5 text-label-caption font-label-caption text-text-secondary font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[15px] text-secondary" data-icon="lightbulb">lightbulb</span>
+          추천 정밀 분석 질문 (PRD 3대 필수 쿼리)
+        </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- Chip 1 (Active Reference) -->
+<button class="group flex items-center justify-between text-left p-3 rounded-lg bg-surface-card border-2 border-secondary text-text-primary shadow-sm hover:border-secondary transition-all" type="button">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded bg-secondary text-on-secondary text-label-caption font-label-caption flex items-center justify-center font-bold shrink-0">1</span>
+<div>
+<div class="text-body-sm font-body-sm font-bold text-secondary">"D가 늦어진 원인과 대응은?"</div>
+<div class="text-label-caption font-label-caption text-text-secondary">공정차이 -10.7pp 점검 현장 원인 실사</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Chip 2 -->
+<button class="group flex items-center justify-between text-left p-3 rounded-lg bg-surface-card border border-border-default hover:border-secondary/60 text-text-primary hover:bg-surface-subtle transition-all" type="button">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded bg-surface-subtle text-text-secondary text-label-caption font-label-caption flex items-center justify-center font-bold shrink-0">2</span>
+<div>
+<div class="text-body-sm font-body-sm font-semibold text-text-primary group-hover:text-secondary">"K의 점검 이유와 기록된 대응은?"</div>
+<div class="text-label-caption font-label-caption text-text-secondary">공정차이 -8.4pp 토목 현장 리스크 분석</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-secondary text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Chip 3 -->
+<button class="group flex items-center justify-between text-left p-3 rounded-lg bg-surface-card border border-border-default hover:border-secondary/60 text-text-primary hover:bg-surface-subtle transition-all" type="button">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded bg-surface-subtle text-text-secondary text-label-caption font-label-caption flex items-center justify-center font-bold shrink-0">3</span>
+<div>
+<div class="text-body-sm font-body-sm font-semibold text-text-primary group-hover:text-secondary">"실제 준공일·미수금은?"</div>
+<div class="text-label-caption font-label-caption text-text-secondary">미보유 데이터 '알 수 없음' 검증 쿼리</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-secondary text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- 3. Conversational Message Stream (PRD 요구사항 완벽 반영)      -->
+<!-- ============================================================== -->
+<div class="flex-1 bg-surface-card border border-border-default rounded-xl p-5 shadow-sm overflow-y-auto space-y-6">
+<!-- User Inquiry Bubble -->
+<div class="flex justify-end items-start gap-3">
+<div class="max-w-2xl bg-text-primary text-on-primary rounded-xl rounded-tr-none px-4 py-3 shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-label-caption font-label-caption text-slate-300">공정관리 본부장 질의</span>
+<span class="text-label-caption font-label-caption text-slate-400">14:32</span>
+</div>
+<p class="text-body-default font-body-default font-medium leading-relaxed">
+              D가 늦어진 원인과 대응은?
+            </p>
+</div>
+<div class="w-9 h-9 rounded-lg bg-slate-200 border border-border-strong flex items-center justify-center text-text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+</div>
+</div>
+<!-- Gemini AI Response Node -->
+<div class="flex items-start gap-3">
+<!-- Gemini AI Bot Avatar -->
+<div class="w-9 h-9 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>
+</div>
+<!-- Structured Intelligence Card -->
+<div class="flex-1 max-w-4xl bg-surface-card border border-border-strong rounded-xl rounded-tl-none shadow-sm overflow-hidden">
+<!-- Response Header Bar -->
+<div class="bg-surface-subtle border-b border-border-default px-5 py-3 flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-text-primary font-bold">현장 D 정밀 공정 분석 결과</span>
+<span class="px-2 py-0.5 rounded text-label-badge font-label-badge bg-status-critical-bg text-status-critical border border-status-critical-border flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-critical"></span>
+                  긴급 점검 대상 (1순위)
+                </span>
+</div>
+<div class="text-label-caption font-label-caption text-text-secondary font-data-tabular">
+                분석 기준: 2026-09 실적 (신뢰도 100% 시스템 실측 데이터 연계)
+              </div>
+</div>
+<!-- Content Area: Tectonic Grid System -->
+<div class="p-5 space-y-5">
+<!-- 1) 기준 월 및 대상 메타데이터 태그 -->
+<div class="flex flex-wrap items-center gap-4 text-body-sm font-body-sm pb-3 border-b border-border-default text-text-secondary">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="calendar_month">calendar_month</span>
+<span>기준 연월: <strong class="text-text-primary">2026년 9월</strong></span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="location_on">location_on</span>
+<span>대상 현장: <strong class="text-text-primary">현장 D (수도권 공동주택 신축공사)</strong></span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-muted" data-icon="engineering">engineering</span>
+<span>공사 기간: <strong class="text-text-primary font-data-tabular">2024.03 ~ 2027.02 (36개월)</strong></span>
+</div>
+</div>
+<!-- 2) 공정 지표 요약 (4컬럼 수치 메트릭 그리드) -->
+<div>
+<div class="text-label-caption font-label-caption text-text-secondary font-bold uppercase tracking-wider mb-2">
+                  정밀 정량 메트릭 검증 결과
+                </div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="p-3 rounded-lg bg-surface-subtle border border-border-default">
+<div class="text-label-caption font-label-caption text-text-secondary">계획 공정률</div>
+<div class="text-headline-md font-data-tabular-bold text-text-primary mt-1">86.5%</div>
+<div class="text-label-caption font-label-caption text-text-muted">당월 목표 수치</div>
+</div>
+<div class="p-3 rounded-lg bg-surface-subtle border border-border-default">
+<div class="text-label-caption font-label-caption text-text-secondary">실제 공정률</div>
+<div class="text-headline-md font-data-tabular-bold text-status-critical mt-1">75.8%</div>
+<div class="text-label-caption font-label-caption text-status-critical font-medium">목표 미달성 현장</div>
+</div>
+<div class="p-3 rounded-lg bg-status-critical-bg border border-status-critical-border">
+<div class="text-label-caption font-label-caption text-status-critical font-bold">공정 차이 (Variance)</div>
+<div class="text-headline-md font-data-tabular-bold text-status-critical mt-1">-10.7 pp</div>
+<div class="text-label-caption font-label-caption text-status-critical font-semibold">점검 기준(±5.0pp) 초과</div>
+</div>
+<div class="p-3 rounded-lg bg-surface-subtle border border-border-default">
+<div class="text-label-caption font-label-caption text-text-secondary">전체 기성률 (진척)</div>
+<div class="text-headline-md font-data-tabular-bold text-text-primary mt-1">69.4%</div>
+<div class="text-label-caption font-label-caption text-text-muted">공정 대비 기성 -6.4pp 편차</div>
+</div>
+</div>
+</div>
+<!-- 3) 정성 기록 분석 (2분할 상세 카드) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- 지연 원인 -->
+<div class="p-4 rounded-lg bg-surface-bg border border-border-default space-y-2">
+<div class="flex items-center gap-2 text-status-critical font-bold text-body-sm font-body-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="report_problem">report_problem</span>
+                    기록된 지연 원인 (월말 현장 보고서)
+                  </div>
+<p class="text-body-default font-body-default text-text-primary leading-relaxed pl-6 bg-status-critical-bg/30 p-2.5 rounded border border-status-critical-border/50">
+                    "하도급 인력 수급 불균형 및 주요 자재(철근/레미콘) 조달 지연"
+                  </p>
+<p class="text-label-caption font-label-caption text-text-secondary pl-6">
+                    * 골조 공사 구간 투입 작업자 수급 지연 및 레미콘 배차율 전월 대비 18% 감소 발생.
+                  </p>
+</div>
+<!-- 대응 계획 -->
+<div class="p-4 rounded-lg bg-surface-bg border border-border-default space-y-2">
+<div class="flex items-center gap-2 text-secondary font-bold text-body-sm font-body-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="assignment_turned_in">assignment_turned_in</span>
+                    현장 대응 계획 (본사 공정관리팀 승인)
+                  </div>
+<p class="text-body-default font-body-default text-text-primary leading-relaxed pl-6 bg-secondary/5 p-2.5 rounded border border-secondary/20">
+                    "자재 공급 정상화 진행 후 잔여 지연 공정 만회를 위해 공정관리팀 주간 현장 실사 및 후속 공정 패스트트랙 추진 중"
+                  </p>
+<p class="text-label-caption font-label-caption text-text-secondary pl-6">
+                    * 마감 공정 공구 분할 착수 및 주말 작업 승인을 통한 만회 목표 수립 완료.
+                  </p>
+</div>
+</div>
+<!-- 4) [근거 명시 및 제약 안내 박스] (PRD 제약조건 명시) -->
+<div class="p-3.5 rounded-lg bg-surface-subtle border border-border-strong flex items-start gap-2.5">
+<span class="material-symbols-outlined text-text-muted text-[20px] shrink-0 mt-0.5" data-icon="info">info</span>
+<div class="space-y-1">
+<div class="text-body-sm font-body-sm font-semibold text-text-primary">데이터 신뢰성 및 수집 제약 고지</div>
+<p class="text-label-caption font-label-caption text-text-secondary leading-normal">
+                    ※ 실제 준공일 및 미수금 현황은 시스템 수집 데이터에 포함되어 있지 않아 <strong class="text-status-critical font-bold">'알 수 없음'</strong>으로 안내됩니다. 본 시스템은 승인된 월별 공정률(계획/실제) 및 기성 청구 확정치만을 기준으로 판정합니다.
+                  </p>
+</div>
+</div>
+<!-- Quick Pivot Action Buttons -->
+<div class="pt-2 flex items-center justify-between border-t border-border-default">
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-subtle hover:bg-border-default text-text-primary text-label-badge font-label-badge flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="open_in_new">open_in_new</span>
+                    비교표에서 D현장 열기
+                  </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-subtle hover:bg-border-default text-text-primary text-label-badge font-label-badge flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="history_toggle_off">history_toggle_off</span>
+                    전월(2026-08) 이력 비교
+                  </button>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1.5 text-text-muted hover:text-text-primary rounded transition-colors" title="답변 복사" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="content_copy">content_copy</span>
+</button>
+<button class="p-1.5 text-text-muted hover:text-text-primary rounded transition-colors" title="도움됨" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="thumb_up">thumb_up</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- 4. Bottom Chat Input & Fail-safe Notification                 -->
+<!-- ============================================================== -->
+<div class="bg-surface-card border border-border-default rounded-xl p-4 shadow-sm space-y-2">
+<form class="flex items-center gap-3" onsubmit="event.preventDefault();">
+<!-- Attachment/Context Icon -->
+<div class="flex items-center gap-1 text-text-muted">
+<button class="p-2 hover:bg-surface-subtle rounded-lg transition-colors text-text-secondary" title="현재 필터 조건 첨부됨" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- Prompt Input Field -->
+<div class="flex-1 relative">
+<input class="w-full h-11 px-4 pr-10 bg-surface-bg border border-border-strong rounded-lg text-body-default font-body-default text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary transition-all" placeholder="현황 수치 및 현장 기록에 대해 질문하세요... (예: K현장 토목 지연 요약 또는 전사 공정차이 상위 3곳)" type="text"/>
+<span class="absolute right-3 top-3 text-label-caption font-label-caption text-text-muted hidden sm:inline">
+              Enter ↵
+            </span>
+</div>
+<!-- Send Primary Button -->
+<button class="h-11 px-5 bg-text-primary hover:bg-slate-800 text-on-primary font-body-default font-semibold rounded-lg flex items-center gap-2 shadow-sm transition-colors shrink-0" type="submit">
+<span>전송</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+</button>
+</form>
+<!-- Fail-safe / Filter Reset Warning Banner (PRD 요구사항) -->
+<div class="flex items-center justify-between text-label-caption font-label-caption text-text-secondary px-1 pt-1">
+<div class="flex items-center gap-1.5 text-text-muted">
+<span class="material-symbols-outlined text-[15px]" data-icon="sync_problem">sync_problem</span>
+<span>필터를 변경하면 이전 대화가 새로고침되며, AI 연결 장애 시에도 기본 대시보드와 CSV 기능은 정상 작동합니다.</span>
+</div>
+<span class="text-text-muted">Token: Gemini 1.5 Pro Enterprise · Latency: 0.42s</span>
+</div>
+</div>
+</main>
+</div>
+</body></html>

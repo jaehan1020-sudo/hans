@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRD — 현장별 공정·기성 대시보드</title>
+<style>
+:root{--bg:#f8fafc;--fg:#0f172a;--mute:#475569;--card:#ffffff;--line:#e2e8f0;--head:#f1f5f9;--accent:#1d4ed8;--code:#eef2ff;--note:#fffbeb;--noteline:#f59e0b;--ai:#b45309}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--fg:#e2e8f0;--mute:#94a3b8;--card:#111a2e;--line:#243049;--head:#18233b;--accent:#93c5fd;--code:#1a2547;--note:#2a2210;--noteline:#b7791f;--ai:#fbbf24}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;line-height:1.65;font-size:15px}
+main{max-width:1100px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:28px;margin:0 0 8px}
+h2{font-size:20px;margin:40px 0 12px;padding-top:16px;border-top:1px solid var(--line)}
+h3{font-size:16px;margin:24px 0 8px;color:var(--accent)}
+p{margin:8px 0}
+ul{margin:8px 0;padding-left:22px}
+li{margin:4px 0}
+blockquote{margin:12px 0;padding:10px 14px;background:var(--note);border-left:4px solid var(--noteline);border-radius:4px;color:var(--mute)}
+code{font-family:"JetBrains Mono",Consolas,monospace;font-size:.88em;background:var(--code);padding:1px 5px;border-radius:4px}
+.ai{color:var(--ai);font-weight:600;white-space:nowrap}
+.tw{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--head);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+</style>
+</head>
+<body>
+<main>
+<h1>PRD — 현장별 공정·기성 대시보드</h1>
+<h2>한눈에 보기</h2>
+<ul>
+<li><strong>누가:</strong> 현장을 총괄하는 임원·팀장이 씁니다.</li>
+<li><strong>무엇을:</strong> 가상 현장 12곳의 공정·기성 현황을 한 화면에서 비교하고, 늦어진 현장을 찾아 기록된 이유까지 확인합니다.</li>
+<li><strong>줄이는 불편:</strong> 현장별 엑셀을 하나씩 열어 비교하는 시간입니다.</li>
+<li><strong>필수 기능 5개:</strong> 자료 가져오기, 현황 보기, 점검 현장 찾기, CSV 내보내기, AI에게 묻기입니다.</li>
+<li><strong>성공 기준:</strong> <code>실습조건.md</code>의 "정답 숫자" 표와 같은 결과가 나오는 것입니다. 예: 2026년 9월 기성률 67.2%, 공정차이 -2.0pp, 점검 순서 D → I → K.</li>
+</ul>
+<blockquote>이 문서의 자료는 교육용 가상 자료입니다. 현장명·계약·실적은 실제 동일토건의 것이 아닙니다.</blockquote>
+<h2>1. 누가·언제·왜 쓰는지</h2>
+<div class="tw"><table><thead><tr>
+<th>항목</th>
+<th>내용</th>
+<th>근거</th>
+</tr></thead><tbody>
+<tr>
+<td>누가</td>
+<td>현장을 총괄하는 임원·팀장</td>
+<td>질문 1 답변(B). 여러 현장 중 늦어진 곳을 빨리 파악하는 역할입니다.</td>
+</tr>
+<tr>
+<td>언제</td>
+<td>월말 자료가 들어온 뒤, 그 달 현황을 확인할 때 <span class="ai">(AI 결정)</span></td>
+<td>자료의 한 행이 "한 현장의 한 달 월말 상태"이기 때문입니다.</td>
+</tr>
+<tr>
+<td>왜</td>
+<td>12개 현장 중 어느 현장을 먼저 봐야 하는지 알고, 그 이유까지 확인하려고</td>
+<td>9월 전체 공정차이는 -2.0pp이지만 D는 -10.7pp입니다. 전체 평균만 보면 D·I·K의 지연이 가려집니다.</td>
+</tr>
+</tbody></table></div>
+<h2>2. 학습자 답변 기록 (PRD 질문 7개)</h2>
+<div class="tw"><table><thead><tr>
+<th>#</th>
+<th>질문</th>
+<th>학습자 선택</th>
+<th>반영하는 곳</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>이 화면을 주로 누가 쓰나요?</td>
+<td>B. 현장을 총괄하는 임원·팀장</td>
+<td>1장</td>
+</tr>
+<tr>
+<td>2</td>
+<td>가장 먼저 줄이고 싶은 불편은?</td>
+<td>A. 현장별 엑셀을 하나씩 비교하는 시간</td>
+<td>3장</td>
+</tr>
+<tr>
+<td>3</td>
+<td>첫 화면에서 가장 먼저 보여 줄 것은?</td>
+<td>C. 12개 현장 비교표</td>
+<td>화면 요약</td>
+</tr>
+<tr>
+<td>4</td>
+<td>점검 현장 한 줄에 함께 보여 줄 숫자는?</td>
+<td>C. 계획·실제 공정률과 기성률 모두</td>
+<td>화면 요약</td>
+</tr>
+<tr>
+<td>5</td>
+<td>점검 현장 한 줄을 누르면?</td>
+<td>A. 비교표로 가서 그 현장 줄을 강조하고 기록을 펼침</td>
+<td>화면 요약</td>
+</tr>
+<tr>
+<td>6</td>
+<td>내려받은 CSV를 주로 어디에 쓰나요?</td>
+<td>B. 엑셀에서 더 계산하기 (원본 열에 기성률·공정차이·상태·당월기성액 열 추가)</td>
+<td>4장 기능 4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>AI에게 주로 무엇을 묻게 될까요?</td>
+<td>A. 점검 이유와 기록된 대응 설명</td>
+<td>4장 기능 5, 화면 요약</td>
+</tr>
+</tbody></table></div>
+<h2>3. 줄이고 싶은 불편</h2>
+<div class="tw"><table><thead><tr>
+<th>불편</th>
+<th>이 앱이 줄이는 방법</th>
+<th>근거</th>
+</tr></thead><tbody>
+<tr>
+<td>현장별 엑셀을 하나씩 열어 비교하는 시간</td>
+<td>12개 현장을 한 화면의 표에서 비교하고, 월·지역·유형·현장 필터로 범위를 바꿉니다.</td>
+<td>질문 2 답변(A). 자료는 12개 현장 × 12개월 = 144행입니다.</td>
+</tr>
+</tbody></table></div>
+<h2>4. 만들 기능 (필수 기능)</h2>
+<div class="tw"><table><thead><tr>
+<th>번호</th>
+<th>기능</th>
+<th>하는 일</th>
+<th>근거</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>자료 가져오기</td>
+<td>CSV 또는 JSON 파일을 검사하고 미리 보여준 뒤 전체를 바꿉니다. 오류가 있거나 취소하면 지금 자료를 그대로 둡니다. CSV를 가져온 뒤 같은 JSON을 가져와도 144행입니다.</td>
+<td>잘못된 파일이 들어와도 기존 숫자가 바뀌지 않아야 합니다.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>현황 보기</td>
+<td>처음에는 2026년 9월·전체 현장을 보여줍니다. 월·지역·공사 유형·현장을 고를 수 있습니다. 전체 기성률, 계획·실제 공정률, 공정차이를 큰 숫자로 보여줍니다. 선택 월까지의 계획·실제 공정률 추이와 월별 기성 막대도 보여줍니다. 금액은 백만원, 비율은 소수 첫째 자리까지 표시합니다. 전월 자료가 없는 첫 달(2025-10)의 당월기성액과 자료가 없는 범위는 "계산 불가"로 표시합니다.</td>
+<td>0%로 대신 표시하면 실제 0%와 구별되지 않습니다.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>점검 현장 찾기</td>
+<td>공정차이(실제 - 계획, pp)로 상태를 나눕니다. 0pp 이상은 정상, -5pp 초과 0pp 미만은 주의, -5pp 이하는 점검입니다. 점검 순서는 공정차이가 작은 순이고, 같으면 현장 ID 순입니다. 비교표의 행을 펼치면 공사기간·기록된 상황·대응 계획이 나옵니다.</td>
+<td>질문 3·4·5 답변. 임원·팀장이 늦어진 현장과 그 이유를 한 흐름에서 봅니다.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>CSV 내보내기</td>
+<td>지금 고른 월·지역·유형·현장과 같은 범위를 내보냅니다. 원본 15개 열에 기성률·공정차이·상태·당월기성액 열을 더하고, 숫자와 단위를 그대로 유지합니다. 엑셀에서 한글이 깨지지 않게 합니다.</td>
+<td>질문 6 답변(B). 엑셀에서 바로 정렬·필터할 수 있습니다.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AI에게 묻기 (Gemini API)</td>
+<td>계산은 프로그램이 하고, AI는 그 숫자와 기록된 상황·대응 계획을 근거로 설명합니다. 실제 준공일·미수금처럼 자료에 없는 내용은 "알 수 없음"으로 안내합니다. 추이 질문에는 같은 필터의 선택 월까지 월별 요약도 전달합니다. 월·지역·유형·현장을 바꾸면 이전 답변을 지웁니다. AI 연결이 실패해도 대시보드와 CSV는 계속 쓸 수 있습니다.</td>
+<td>질문 7 답변(A). 숫자는 화면이 이미 보여주므로 AI는 기록된 상황·대응 설명을 맡습니다.</td>
+</tr>
+</tbody></table></div>
+<h3>계산 기준 (한눈에)</h3>
+<div class="tw"><table><thead><tr>
+<th>항목</th>
+<th>기준</th>
+<th>예시 (2026-09)</th>
+</tr></thead><tbody>
+<tr>
+<td>기성률</td>
+<td>누적기성액 / 계약금액 × 100</td>
+<td>424,063.4 / 630,700 = 67.2%</td>
+</tr>
+<tr>
+<td>공정차이</td>
+<td>실제 공정률 - 계획 공정률 (pp)</td>
+<td>71.2% - 73.2% = -2.0pp</td>
+</tr>
+<tr>
+<td>당월기성액</td>
+<td>이번 달 누적기성액 - 바로 전월 누적기성액</td>
+<td>424,063.4 - 395,184.7 = 28,878.7백만원</td>
+</tr>
+<tr>
+<td>상태 판정</td>
+<td>공정차이만으로 판정. <code>issueCategory</code>(현장 기록 분류)는 판정에 쓰지 않음</td>
+<td>H는 "인력 배치" 기록이 있어도 -1.8pp라 주의</td>
+</tr>
+</tbody></table></div>
+<h2>5. 만들지 않는 것</h2>
+<div class="tw"><table><thead><tr>
+<th>만들지 않는 것</th>
+<th>이유</th>
+</tr></thead><tbody>
+<tr>
+<td>로그인</td>
+<td>한 사람이 자기 PC에서 쓰는 실습이라 필요하지 않습니다.</td>
+</tr>
+<tr>
+<td>데이터베이스</td>
+<td>파일을 브라우저에서 읽고 계산합니다. 서버 저장이 없습니다.</td>
+</tr>
+<tr>
+<td>회사 시스템 연동</td>
+<td>자료가 교육용 가상 자료입니다.</td>
+</tr>
+<tr>
+<td>실제 기성 청구·발주</td>
+<td>이 앱은 현황을 보는 용도입니다.</td>
+</tr>
+<tr>
+<td>일정 예측</td>
+<td>자료에는 계약상 준공일만 있고 실제 완료일·예측일은 없습니다.</td>
+</tr>
+<tr>
+<td>새로고침 후 자료 유지</td>
+<td>새로고침하면 파일을 다시 가져옵니다.</td>
+</tr>
+<tr>
+<td>별도 상세 페이지</td>
+<td>현장 기록은 비교표 안에서 행을 펼쳐 봅니다.</td>
+</tr>
+<tr>
+<td>GitHub 저장·Vercel 배포의 자동 실행</td>
+<td>앱 구현과 로컬 검증이 끝나면 멈추고, 사용자가 별도로 요청한 뒤에만 진행합니다.</td>
+</tr>
+</tbody></table></div>
+<h2>6. 수업 후 해 볼 것</h2>
+<div class="tw"><table><thead><tr>
+<th>항목</th>
+<th>설명</th>
+<th>근거</th>
+</tr></thead><tbody>
+<tr>
+<td>AI로 현장끼리 비교하기</td>
+<td>예: "D와 I 중 어디가 더 심각해?"</td>
+<td>질문 7에서 고르지 않은 선택지(C)입니다.</td>
+</tr>
+<tr>
+<td>AI로 보고용 요약 문장 만들기</td>
+<td>예: "9월 현황을 3줄로 요약해 줘."</td>
+<td>질문 7에서 고르지 않은 선택지(B)입니다.</td>
+</tr>
+<tr>
+<td>CSV를 원본 열 그대로 내보내는 방식 추가</td>
+<td>보고서에 그대로 붙이는 용도</td>
+<td>질문 6에서 고르지 않은 선택지(A)입니다.</td>
+</tr>
+<tr>
+<td>새로고침 후에도 자료 유지하기</td>
+<td>저장 방식이 필요해 이번 범위를 넘습니다.</td>
+<td>"하지 않는 것"에 해당합니다.</td>
+</tr>
+</tbody></table></div>
+<h2>7. 성공 기준</h2>
+<p>다 만든 뒤 아래 값과 같아야 합니다. 자세한 월별·지역별 값은 <code>data/검산표.md</code>에 있습니다.</p>
+<div class="tw"><table><thead><tr>
+<th>확인할 것</th>
+<th>정답</th>
+</tr></thead><tbody>
+<tr>
+<td>9월 전체</td>
+<td>계약금액 630,700 · 누적기성액 424,063.4(백만원) · 기성률 67.2%</td>
+</tr>
+<tr>
+<td>9월 공정률</td>
+<td>계획 73.2% · 실제 71.2% · 공정차이 -2.0pp</td>
+</tr>
+<tr>
+<td>9월 당월기성액</td>
+<td>28,878.7백만원</td>
+</tr>
+<tr>
+<td>8월 / 7월 전체</td>
+<td>누적기성액 395,184.7 · 기성률 62.7% / 누적기성액 364,718.5 · 기성률 57.8%</td>
+</tr>
+<tr>
+<td>9월 점검 순서</td>
+<td>D(-10.7pp) → I(-7.6pp) → K(-5.4pp)</td>
+</tr>
+<tr>
+<td>9월 상태 내역</td>
+<td>정상 6곳 · 주의 3곳 · 점검 3곳</td>
+</tr>
+<tr>
+<td>9월 D</td>
+<td>기성률 69.4%, D만 CSV로 내보내면 데이터 1행</td>
+</tr>
+<tr>
+<td>9월 인천·공동주택</td>
+<td>A·G 2곳, 내보내기 데이터 2행</td>
+</tr>
+<tr>
+<td>2025-10</td>
+<td>당월기성액 계산 불가, 누적액을 당월액으로 대신하지 않음</td>
+</tr>
+<tr>
+<td>J의 7월</td>
+<td>당월기성액 0.0, 기록상 기성 확인 서류 보완</td>
+</tr>
+<tr>
+<td>오류 파일 3종</td>
+<td>모두 거부, 지금 자료 유지</td>
+</tr>
+<tr>
+<td>'D가 늦어진 원인과 대응은?'</td>
+<td>공급 정상화 후에도 남은 지연과 주간 확인 계획을 기록대로 설명</td>
+</tr>
+<tr>
+<td>'실제 준공일·미수금은?'</td>
+<td>자료 없음, 계약상 준공일과 실제 완료일을 구분</td>
+</tr>
+</tbody></table></div>
+<h2>화면 요약</h2>
+<p>1. 페이지 4개: 현황 요약(첫 화면), 현장별 비교표, 자료 가져오기, AI에게 묻기.2. 상태 화면 5개: 자료 없음, 가져오기 오류, 점검 대상 없음, AI 답변 기다리는 중, AI 연결 실패.</p>
+<p>3. 첫 화면 순서 <span class="ai">(AI 결정)</span>: 월·지역·유형·현장 선택 → 12개 현장 비교 요약표(현장·상태·계획·실제·공정차이·기성률) → 큰 숫자 4개 → 점검 순위 → 계획·실제 추이와 월별 기성 막대. 질문 3 답변(C)에 따라 비교표가 가장 먼저 보입니다.</p>
+<p>4. 점검 순위 한 줄(질문 4, C): 현장명 · 계획 % · 실제 % · 공정차이 pp · 기성률 %.</p>
+<p>5. 점검 순위 줄을 누르면(질문 5, A): 현장별 비교표 페이지로 이동해 그 현장 줄을 강조하고 기록(공사기간·상황·대응 계획)을 펼칩니다.</p>
+<p>6. 숫자 단위: 금액은 백만원, 비율은 %, 차이는 pp. 모두 소수 첫째 자리까지.</p>
+<p>7. 상태 구분: 정상 0pp 이상 / 주의 -5pp 초과 0pp 미만 / 점검 -5pp 이하. 글자와 색을 함께 씁니다 <span class="ai">(AI 결정)</span>.</p>
+<p>8. 예시 숫자(2026-09): 기성률 67.2% · 계획 73.2% · 실제 71.2% · 공정차이 -2.0pp · 당월기성액 28,878.7백만원.</p>
+<p>9. 예시 숫자(점검): D 계획 86.5%·실제 75.8%·-10.7pp·기성률 69.4% / I -7.6pp / K -5.4pp / 정상 6·주의 3·점검 3.</p>
+<p>10. AI에게 묻기: 지금 범위 표시, 예시 질문 3개("D가 늦어진 원인과 대응은?", "K의 점검 이유와 기록된 대응은?", "실제 준공일·미수금은?"), 질문 입력, 답변과 기준 월·현장·근거 숫자·기록 필드.</p>
+</main>
+</body>
+</html>
